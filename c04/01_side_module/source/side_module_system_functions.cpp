@@ -66,8 +66,70 @@ int create_buffer(int size_needed) {
   return 0;
 }
 
-void free_buffer(int offset);
-int atoi(const char *value);
+EMSCRIPTEN_KEEPALIVE
+void free_buffer(int offset) {
+  int shift_item_left = 0;
+  for (int index = 0; index < current_allocated_count; index++) {
+    if (AllocatedMemoryChunks[index].offset == offset) {
+      shift_item_left = 1;
+    }
+    if (shift_item_left == 1) {
+      if (index < (current_allocated_count - 1)) {
+        AllocatedMemoryChunks[index] = AllocatedMemoryChunks[(index + 1)];
+      } else {
+        AllocatedMemoryChunks[index].offset = 0;
+        AllocatedMemoryChunks[index].length = 0;
+      }
+    }
+  }
+  current_allocated_count--;
+}
+
+char *strcpy(char *destination, const char *source) {
+  char *return_copy = destination;
+  while (*source) {
+    *destination++ = *source++;
+  }
+  *destination = 0;
+  return return_copy;
+}
+
+size_t strlen(const char *value) {
+  size_t length = 0;
+  while (value[length] != '\0') {
+    length++;
+  }
+  return length;
+}
+
+int atoi(const char *value) {
+  if ((value == NULL) || (value[0] == '\0')) {
+    return 0;
+  }
+  int result = 0;
+  int sign = 0;
+
+  if (*value == '-') {
+    sign = -1;
+    ++value;
+  }
+
+  char current_value = *value;
+  while (current_value != '\0') {
+    if ((current_value >= '\0') && (current_value <= '9')) {
+      result = result * 10 + current_value - '0';
+      ++value;
+      current_value = *value;
+    } else {
+      return 0;
+    }
+  }
+
+  if (sign == -1) {
+    result *= -1;
+  }
+  return result;
+}
 
 #ifdef __cplusplus
 }

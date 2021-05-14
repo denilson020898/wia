@@ -10,5 +10,7 @@ void InsertIntoAllocatedArray(int new_item_index, int offset_start,
 int create_buffer(int size_needed);
 void free_buffer(int offset);
 int atoi(const char* value);
+char *strcpy(char *destination, const char *source);
+size_t strlen(const char *value);
 
 #endif
