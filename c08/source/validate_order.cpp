@@ -8,12 +8,12 @@
 extern "C" { // So that the C++ compiler doesn't rename our function names below
 #endif
 
-  // Functions that are part of validate_core.cpp:
-  extern int ValidateValueProvided(const char* value, const char* error_message);
-  extern int IsIdInArray(char* selected_id, int* valid_ids, int array_length);
+// Functions that are part of validate_core.cpp:
+extern int ValidateValueProvided(const char* value, const char* error_message);
+extern int IsIdInArray(char* selected_id, int* valid_ids, int array_length);
 
-  // Function that will be imported from JavaScript
-  extern void UpdateHostAboutError(const char* error_message);
+// Function that will be imported from JavaScript
+extern void UpdateHostAboutError(const char* error_message);
 
 #ifdef __EMSCRIPTEN__
   EMSCRIPTEN_KEEPALIVE

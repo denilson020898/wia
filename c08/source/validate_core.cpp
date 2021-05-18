@@ -8,8 +8,8 @@
 extern "C" { // So that the C++ compiler does not rename our function names
 #endif
 
-  // Function that will be imported from JavaScript
-  extern void UpdateHostAboutError(const char* error_message);
+// Function that will be imported from JavaScript
+extern void UpdateHostAboutError(const char* error_message);
 
 #ifdef __EMSCRIPTEN__
   EMSCRIPTEN_KEEPALIVE
